@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-
-const url =
-  "mongodb+srv://golesanket0:rsfdIczVoaLremCf@cluster0.tsuudru.mongodb.net/Cluster0?retryWrites=true&w=majority";
+const dotenv = require("dotenv");
+dotenv.config();
+const url = process.env.API;
 
 mongoose.connect(url, {
   useNewUrlParser: true,
@@ -17,7 +17,6 @@ conn.on("open", () => {
 conn.on("error", () => {
   console.log("could not connected to the database unozap");
 });
-
 
 // mongodbatlas password
 // rsfdIczVoaLremCf
