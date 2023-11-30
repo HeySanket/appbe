@@ -3,10 +3,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const url = process.env.API;
 
-mongoose.connect(url, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(url);
 
 const conn = mongoose.connection;
 
