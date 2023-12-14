@@ -28,6 +28,8 @@ app.use(
   upload.single("productImg"),
   require("./1.0.0/routes/amazon.route")
 );
+app.use("/shortUrl", require("./1.0.0/routes/shortUrl.route"));
+app.use("/folderCheck", require("./1.0.0/routes/folderCheck.route"));
 
 app.listen(process.env.PORT, () => {
   console.log(`port started at ${process.env.PORT}`);
