@@ -49,6 +49,7 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
+  console.log(req.body, id);
   try {
     const data = await Url.findByIdAndUpdate({ _id: id }, req.body);
     res.status(200).send(data);
