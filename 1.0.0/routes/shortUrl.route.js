@@ -36,4 +36,25 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  const data = await Url.findByIdAndDelete({ _id: id });
+  try {
+    res.status(200).send({ data });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const data = await Url.findByIdAndUpdate({ _id: id }, req.body);
+    res.status(200).send(data);
+  } catch (error) {
+    res.status(500).send({ error });
+  }
+});
+
 module.exports = router;
