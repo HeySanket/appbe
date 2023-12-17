@@ -15,7 +15,7 @@ conn.on("error", () => {
   console.log("could not connected to the database unozap");
 });
 
-// mongodbatlas password
 // rsfdIczVoaLremCf
+// mongodbatlas password
 // golesanket0
 // mongodb+srv://golesanket0:rsfdIczVoaLremCf@cluster0.tsuudru.mongodb.net/Cluster0?retryWrites=true&w=majority
