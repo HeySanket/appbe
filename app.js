@@ -23,6 +23,7 @@ app.use(
 );
 app.use("/shortUrl", require("./1.0.0/routes/shortUrl.route"));
 app.use("/folderCheck", require("./1.0.0/routes/folderCheck.route"));
+app.use("/user", require("./1.0.0/routes/user.routes"));
 
 app.listen(process.env.PORT, () => {
   console.log(`port started at ${process.env.PORT}`);
