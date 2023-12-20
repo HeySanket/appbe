@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
-const url = process.env.API2;
+const url = process.env.API;
 
 mongoose.connect(url);
 
