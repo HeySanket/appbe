@@ -11,7 +11,7 @@ const mailSender = (email) => {
     },
   });
 
-  const a = `https://appbe.up.railway.app/forgotPassword?gamil=${email}`;
+  const a = `https://app.unozap.com/forgotPassword?gamil=${email}`;
   var mailOptions = {
     from: "golesanket0@gmail.com",
     to: email,
@@ -23,7 +23,7 @@ const mailSender = (email) => {
     if (error) {
       console.log(error);
     } else {
-      console.log("Email sent: " + info.response);
+      console.log("Email sent" + info.response);
     }
   });
 };
