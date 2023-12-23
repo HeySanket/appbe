@@ -11,7 +11,7 @@ const mailSender = (email) => {
     },
   });
 
-  const a = `https://app.unozap.com/forgotPassword?gamil=${email}`;
+  const a = `https://app.unozap.com/forgotPassword?gmail=${email}`;
   var mailOptions = {
     from: "golesanket0@gmail.com",
     to: email,
