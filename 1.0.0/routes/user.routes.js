@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user.model");
 const mailSender = require("../reuseCom/mailSender");
+const { createToken } = require("../reuseCom/jwdToken");
 
 router.post("/", async (req, res) => {
   const dataObj = await new User(req.body);
@@ -15,18 +16,29 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  const { gmail, forgot } = req.query;
-  console.log(gmail, forgot);
+  const { gmail, forgot, password: usePass } = req.query;
   if (forgot) {
-    console.log("moye moye");
     const data = await User.findOne({ gmail });
-    console.log(data);
+    if (!data) {
+      return res.status(500).send({ message: "Gmail incorect" });
+    }
     mailSender(data.gmail);
     res.status(200).send(data);
   } else {
     const data = await User.findOne({ gmail });
-    console.log(data, "else");
-    if (data) {
+    if (!data) {
+      return res.status(500).send({ message: "Gmail incorect" });
+    }
+    const { gmail: ucerGmail, _id, password: resPss } = data;
+
+    if (resPss != usePass) {
+      return res.status(500).send({ message: "Password incorect" });
+    }
+    if (ucerGmail != gmail) {
+      return res.status(500).send({ message: "Gmail incorect" });
+    }
+    if (ucerGmail == gmail && resPss == usePass) {
+      res.set("x-token", createToken({ ucerGmail, _id }));
       res.status(200).send(data);
     } else {
       res.status(500).send("err");

@@ -14,7 +14,10 @@ app.use(bodyParser.json());
 // mailSender();
 app.use("/uploads", express.static("uploads"));
 app.use(express.urlencoded({ extended: true }));
-
+app.use(function (req, res, next) {
+  res.setHeader("Access-Control-Expose-Headers", "x-token");
+  next();
+});
 app.use("/todo", require("./1.0.0/routes/todo.route"));
 app.use("/blog", require("./1.0.0/routes/blog.routes"));
 app.use(
