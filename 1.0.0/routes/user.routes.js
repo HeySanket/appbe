@@ -3,12 +3,22 @@ const router = express.Router();
 const User = require("../models/user.model");
 const mailSender = require("../reuseCom/mailSender");
 const { createToken } = require("../reuseCom/jwdToken");
+const { passBcrypt, passNcrypt } = require("../reuseCom/passwordBcrypt");
 
 router.post("/", async (req, res) => {
-  const dataObj = await new User(req.body);
-  console.log(req.body);
+  const { gmail, password, firstName, lastName } = req.body;
+  const newPass = await passBcrypt(password);
+  const dataObj = await new User({
+    gmail,
+    password: newPass,
+    firstName,
+    lastName,
+  });
   const data = await dataObj.save();
+  console.log(data, "data");
   try {
+    const { gmail, _id } = data;
+    res.set("x-token", createToken({ gmail, _id }));
     res.status(200).send(data);
   } catch (err) {
     res.status(500).send(err);
@@ -31,13 +41,13 @@ router.get("/", async (req, res) => {
     }
     const { gmail: ucerGmail, _id, password: resPss } = data;
 
-    if (resPss != usePass) {
-      return res.status(500).send({ message: "Password incorect" });
+    if (!passNcrypt(usePass, resPss)) {
+      return res.status(500).send({ message: "Password incorect 1" });
     }
     if (ucerGmail != gmail) {
       return res.status(500).send({ message: "Gmail incorect" });
     }
-    if (ucerGmail == gmail && resPss == usePass) {
+    if (ucerGmail == gmail && passNcrypt(usePass, resPss)) {
       res.set("x-token", createToken({ ucerGmail, _id }));
       res.status(200).send(data);
     } else {
